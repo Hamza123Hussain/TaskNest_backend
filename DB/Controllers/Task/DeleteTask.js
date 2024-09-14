@@ -3,7 +3,7 @@ import ElementModel from '../../Model/ElementModel.js'
 // Delete a task by its ID from a specific element
 export const deleteTask = async (req, res) => {
   try {
-    const { elementId, taskId } = req.params
+    const { elementId, taskId } = req.query
 
     // Find the element and remove the task by its ID
     const updatedElement = await ElementModel.findOneAndUpdate(

@@ -3,7 +3,7 @@ import ElementModel from '../../Model/ElementModel.js'
 // Update a task within an element
 export const updateTask = async (req, res) => {
   try {
-    const { elementId, taskId } = req.params
+    const { elementId, taskId } = req.query
     const { text, isDone } = req.body // Assuming you're updating task text and completion status
 
     // Find the element and update the task by its ID

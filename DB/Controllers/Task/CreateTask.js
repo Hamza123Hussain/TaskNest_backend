@@ -1,17 +1,22 @@
+import { v4 } from 'uuid'
 import ElementModel from '../../Model/ElementModel.js'
 export const AddTask = async (req, res) => {
   try {
-    const { elementId, task } = req.body
+    const { elementId, text } = req.body
     // Validate input
-    if (!elementId || !task || !task.ID || !task.Text) {
+    if (!elementId || !text) {
       return res
         .status(400)
         .json({ message: 'Element ID and task details are required' })
     }
+    const NewTask = {
+      ID: v4(),
+      Text: text,
+    }
     // Find the element by ID and update it with the new task
     const updatedElement = await ElementModel.findByIdAndUpdate(
       elementId,
-      { $push: { Tasks: task } },
+      { $push: { Tasks: NewTask } },
       { new: true, runValidators: true } // Return the updated document and run validators
     )
     if (!updatedElement) {
