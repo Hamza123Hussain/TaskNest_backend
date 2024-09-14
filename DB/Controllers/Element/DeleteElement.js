@@ -2,7 +2,7 @@ import ElementModel from '../../Model/ElementModel.js'
 // Delete an element by its ID
 export const deleteElement = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.query
     // Find and delete the element by its ID
     const deletedElement = await ElementModel.findByIdAndDelete(id)
     if (!deletedElement) {
