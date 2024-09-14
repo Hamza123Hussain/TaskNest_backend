@@ -12,6 +12,7 @@ const ElementSchema = new Schema({
   Text: { type: String, required: true },
   Tasks: [TaskSchema], // Array of TaskSchema
   CreatedAt: { type: Date, default: Date.now },
+  CreatedBy: { type: String, required: true },
 })
 
 const ElementModel = mongoose.model('Element', ElementSchema)
