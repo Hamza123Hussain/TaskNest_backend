@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { Auth } from '../../../FireBase.js'
 import { UserModel } from '../../Model/UserModel.js'
+
 export const LoginController = async (req, res) => {
   const { email, password } = req.body
   try {
@@ -10,20 +11,26 @@ export const LoginController = async (req, res) => {
       email,
       password
     )
+
     if (userCredential && userCredential.user) {
+      // Find the user in MongoDB by the Firebase UID
       const findUser = await UserModel.findById(userCredential.user.uid)
+
       if (findUser) {
-        res.status(200).json(findUser)
+        return res.status(200).json(findUser) // Send user data from MongoDB
       } else {
-        res.status(404).json({ message: 'User data not found in Firestore' })
+        return res
+          .status(404)
+          .json({ message: 'User data not found in MongoDB' })
       }
     } else {
-      res.status(404).json({ message: 'User not registered' })
+      return res.status(404).json({ message: 'User not registered' })
     }
   } catch (error) {
     console.error('Login error:', error)
-    // Avoid sending complex objects, just send a simple message
-    res.status(500).json({
+
+    // Avoid sending detailed error objects to the client
+    return res.status(500).json({
       message: 'INTERNAL SERVER ERROR',
       details: 'An error occurred during login.',
     })
