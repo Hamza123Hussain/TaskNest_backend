@@ -6,7 +6,7 @@ const ElementSchema = new mongoose.Schema({
   Text: { type: String, required: true },
   Tasks: [
     {
-      ID: { type: String, required: true },
+      _id: { type: String },
       Text: { type: String, required: true },
       ISDone: { type: Boolean, default: false },
       CreatedAt: { type: Date, default: Date.now },
